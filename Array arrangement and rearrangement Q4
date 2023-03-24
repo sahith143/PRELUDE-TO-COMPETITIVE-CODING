@@ -1,0 +1,30 @@
+** Arrange given numbers to form the biggest num **
+#include<bits/stdc++.h>
+using namespace std;
+bool comp(const string &a, const string &b) {
+    string temp1 = a + b;
+    string temp2 = b + a;
+
+    // true if ab > ba
+    // false otherwise
+    return temp1 > temp2;
+}
+
+int main() {
+    vector<string> elements;
+
+    // initialize vector
+    elements.push_back("12");
+    elements.push_back("96");
+    elements.push_back("871");
+
+    // sort function with compare function
+    sort(elements.begin(), elements.end(), comp);
+
+    cout << "The biggest number is: ";
+    for(int i = 0; i < elements.size(); i++) {
+        cout << elements[i];
+    }
+
+    return 0;
+}
