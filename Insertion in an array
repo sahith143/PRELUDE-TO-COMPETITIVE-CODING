@@ -1,0 +1,26 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    int arr[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    int size = 10;
+    int pos = 5;
+    int value = 20;
+    
+    // Shifting elements to make room for the new element
+    for(int i = size-1; i >= pos; i--) {
+        arr[i+1] = arr[i];
+    }
+    
+    // Inserting the new element
+    arr[pos] = value;
+    size++;
+    
+    // Printing the updated array
+    for(int i = 0; i < size; i++) {
+        cout << arr[i] << " ";
+    }
+    
+    return 0;
+}
