@@ -1,0 +1,36 @@
+** Search in Rotated Sorted Array **
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+    // Find the pivot index
+    int left = 0, right = nums.size() - 1;
+    while (left < right) {
+        int mid = (left + right) / 2;
+        if (nums[mid] > nums[right]) {
+            left = mid + 1;
+        } else {
+            right = mid;
+        }
+    }
+    int pivot = left;
+    
+    // Apply binary search on the appropriate sub-array
+    left = 0, right = nums.size() - 1;
+    if (target >= nums[pivot] && target <= nums[right]) {
+        left = pivot;
+    } else {
+        right = pivot - 1;
+    }
+    while (left <= right) {
+        int mid = (left + right) / 2;
+        if (nums[mid] == target) {
+            return mid;
+        } else if (nums[mid] < target) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    return -1;
+}
+};
