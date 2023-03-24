@@ -1,0 +1,48 @@
+** check if all the rows are in circular rotation of each other **
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+bool areRowsCircularlyRotated(vector<string> matrix) {
+    int rows = matrix.size();
+    int cols = matrix[0].size();
+
+    // Check each row against the first row
+    for (int i = 1; i < rows; i++) {
+        // Create a new string by concatenating the first row with itself
+        string concatenated = matrix[0] + matrix[0];
+
+        // Check if the current row is a substring of the concatenated string
+        if (concatenated.find(matrix[i]) == string::npos) {
+            // If not, the rows are not circularly rotated
+            return false;
+        }
+    }
+
+    // If all rows have been checked and no mismatch has been found, the rows are circularly rotated
+    return true;
+}
+
+int main() {
+    // Sample input matrix
+    vector<string> matrix;
+	matrix.push_back("abcd");
+	matrix.push_back("dabc");
+	matrix.push_back("cdab");
+	matrix.push_back("bcda");
+
+
+    // Check if rows are circularly rotated
+    bool result = areRowsCircularlyRotated(matrix);
+
+    // Print result
+    if (result) {
+        cout << "Rows are circularly rotated" << endl;
+    } else {
+        cout << "Rows are not circularly rotated" << endl;
+    }
+
+    return 0;
+}
