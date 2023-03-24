@@ -1,0 +1,27 @@
+** sum of middle row and sum of middle column **
+#include <iostream>
+using namespace std;
+
+int main() {
+    int arr[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}; // example 2D array
+    int middleRow = 1; // index of middle row
+    int middleColumn = 1; // index of middle column
+    int sumRow = 0;
+    int sumColumn = 0;
+    
+    // calculate sum of middle row
+    for (int j = 0; j < 3; j++) {
+        sumRow += arr[middleRow][j];
+    }
+    
+    // calculate sum of middle column
+    for (int i = 0; i < 3; i++) {
+        sumColumn += arr[i][middleColumn];
+    }
+    
+    // output results
+    cout << "Sum of middle row: " << sumRow << endl;
+    cout << "Sum of middle column: " << sumColumn << endl;
+    
+    return 0;
+}
