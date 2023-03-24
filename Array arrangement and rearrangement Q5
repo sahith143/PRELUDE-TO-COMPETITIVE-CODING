@@ -1,0 +1,45 @@
+** Positive elements at even and negative at odd positions (Relative order not maintained) **
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+    vector<int> elements;
+
+    // initialize vector
+    elements.push_back(2);
+    elements.push_back(5);
+    elements.push_back(3);
+    elements.push_back(1);
+    elements.push_back(8);
+    elements.push_back(6);
+    elements.push_back(-9);
+    elements.push_back(-4);
+    elements.push_back(7);
+
+    int n = elements.size();
+
+    vector<int> result(n);
+    int even = 0, odd = 1;
+
+    // iterate through the elements
+    for(int i = 0; i < n; i++) {
+        // check if the element is positive
+        if(elements[i] > 0) {
+            result[even] = elements[i];
+            even += 2;
+        }
+        // check if the element is negative
+        else {
+            result[odd] = elements[i];
+            odd += 2;
+        }
+    }
+
+    // output the rearranged elements
+    cout << "Rearranged elements: ";
+    for(int i = 0; i < n; i++) {
+        cout << result[i] << " ";
+    }
+
+    return 0;
+}
