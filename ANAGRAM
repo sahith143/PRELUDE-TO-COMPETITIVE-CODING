@@ -1,0 +1,32 @@
+** TO FIND TWO STRINGS ARE ANAGRAM **
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+using namespace std;
+
+bool areAnagrams(string s1, string s2) {
+    int n1 = s1.length();
+    int n2 = s2.length();
+    
+    // If lengths of two strings are not same, then they cannot be anagrams
+    if (n1 != n2)
+        return false;
+    
+    // Sort both strings
+    sort(s1.begin(), s1.end());
+    sort(s2.begin(), s2.end());
+    
+    // Compare sorted strings
+    return (s1 == s2);
+}
+
+int main() {
+    string s1, s2;
+    cout << "Enter two strings to check if they are anagrams:" << endl;
+    cin >> s1 >> s2;
+    if (areAnagrams(s1, s2))
+        cout << s1 << " and " << s2 << " are anagrams." << endl;
+    else
+        cout << s1 << " and " << s2 << " are not anagrams." << endl;
+    return 0;
+}
