@@ -1,0 +1,136 @@
+** Design a stack with operations on middle element **
+#include <iostream>
+#include <stdexcept>
+
+using namespace std;
+
+class Node {
+public:
+    int val;
+    Node* prev;
+    Node* next;
+    
+    Node(int val) {
+        this->val = val;
+        prev = NULL;
+        next = NULL;
+    }
+};
+
+class MidStack {
+private:
+    Node* head;
+    Node* mid;
+    int size;
+    
+public:
+    MidStack() {
+        head = NULL;
+        mid = NULL;
+        size = 0;
+    }
+    
+    void push(int val) {
+        Node* newNode = new Node(val);
+        
+        if (head == NULL) {
+            head = newNode;
+            mid = newNode;
+        } else {
+            newNode->next = head;
+            head->prev = newNode;
+            head = newNode;
+            
+            if (size % 2 == 1) {
+                mid = mid->prev;
+            }
+        }
+        
+        size++;
+    }
+    
+    int pop() {
+        if (head == NULL) {
+            throw runtime_error("Stack is empty");
+        }
+        
+        int val = head->val;
+        
+        if (head == mid) {
+            mid = mid->next;
+        }
+        
+        Node* temp = head;
+        head = head->next;
+        
+        if (head != NULL) {
+            head->prev = NULL;
+        }
+        
+        delete temp;
+        size--;
+        
+        return val;
+    }
+    
+    int getMid() {
+        if (mid == NULL) {
+            throw runtime_error("Stack is empty");
+        }
+        
+        return mid->val;
+    }
+    
+    int removeMid() {
+        if (mid == NULL) {
+            throw runtime_error("Stack is empty");
+        }
+        
+        int val = mid->val;
+        
+        if (size == 1) {
+            delete mid;
+            head = NULL;
+            mid = NULL;
+            size = 0;
+        } else {
+            if (size % 2 == 0) {
+                mid = mid->prev;
+            } else {
+                mid = mid->next;
+            }
+            
+            Node* temp = mid->prev;
+            temp->next = mid->next;
+            mid->next->prev = temp;
+            
+            delete mid;
+            size--;
+        }
+        
+        return val;
+    }
+};
+
+int main() {
+    MidStack stack;
+    
+    stack.push(1);
+    stack.push(2);
+    stack.push(3);
+    stack.push(4);
+    stack.push(5);
+    
+    cout << stack.getMid() << endl;
+    
+    stack.removeMid();
+    
+    cout << stack.getMid() << endl;
+    
+    stack.pop();
+    stack.pop();
+    
+    cout << stack.getMid() << endl;
+    
+    return 0;
+}
