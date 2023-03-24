@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int arr[] = {1, 2, 3, 4, 5};
+    int n = 5; // size of array
+
+    // print the original array
+    cout << "Original Array: ";
+    for(int i=0; i<n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+
+    // delete element at index 2
+    int delIndex = 2;
+    for(int i=delIndex; i<n-1; i++) {
+        arr[i] = arr[i+1];
+    }
+    n--; // decrease the size of the array
+
+    // print the modified array
+    cout << "Modified Array: ";
+    for(int i=0; i<n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
