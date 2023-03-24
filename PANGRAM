@@ -1,0 +1,48 @@
+** TO FIND TWO STRINGS ARE PANGRAM **
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+bool isPangram(string str) {
+    // Convert string to lowercase
+    transform(str.begin(), str.end(), str.begin(), ::tolower);
+    
+    // Create a boolean array to mark characters present in string
+    bool marked[26] = {false};
+    
+    // Traverse through all characters and mark their presence
+    for (int i = 0; i < str.length(); i++) {
+        if (str[i] >= 'a' && str[i] <= 'z') {
+            marked[str[i] - 'a'] = true;
+        }
+    }
+    
+    // Check if all characters are present
+    for (int i = 0; i < 26; i++) {
+        if (marked[i] == false) {
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+int main() {
+    // Get two strings from user input
+    string str1, str2;
+    cout << "Enter the first string: ";
+    getline(cin, str1);
+    cout << "Enter the second string: ";
+    getline(cin, str2);
+    
+    // Check if both strings are pangrams
+    if (isPangram(str1) && isPangram(str2)) {
+        cout << "Both strings are pangrams." << endl;
+    } else {
+        cout << "Both strings are not pangrams." << endl;
+    }
+    
+    return 0;
+}
