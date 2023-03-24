@@ -1,0 +1,117 @@
+In this problem, you will have to efficiently implement modular exponentation. Recall that the problem of modular exponentiation is, given positive integers a and n, and a non-negative integer x, calculate ax mod n.
+
+One way of doing this is exponentiation by squaring. It involves repeatedly squaring the base a and reducing it mod n. Doing so yields the values a, a2, a4, a8, ... etc. By combining these in the correct way, and using the fact that every number has a binary representation, we can compute ax mod n in O(logx) steps of multiplication mod n.
+
+Implement modular exponentiation by squaring, and output the intermediary values of a2i mod n, as well as the final value ax mod n.
+
+Input Format
+
+The input will be exactly one line, with three space delimited integers a, x, and n.
+
+Constraints
+
+The integers will satisfy 2 <= a, x, n <= 264
+
+Output Format
+
+On the first line, output the d-bit binary representation of x.
+
+On the next d lines, output the values:
+
+a1 mod n,
+
+a2 mod n,
+
+a4 mod n
+
+...
+
+a2d mod n
+
+On the last line, output ax mod n
+
+Sample Input
+
+3 7 10
+
+Sample Output
+
+111
+
+3
+
+9
+
+1
+
+7
+
+Explanation
+
+7 in binary is written as 111.
+
+31 = 3 mod 10
+
+32 = 9 mod 10
+
+34 = 81 = 1 mod 10
+
+37 = 2187 = 7 mod 10
+
+//Code
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef unsigned long long ull;
+
+// Calculate (a*b)%m avoiding overflow
+ull mulmod(ull a, ull b, ull m) {
+    ull res = 0;
+    a = a % m;
+    while (b > 0) {
+        if (b % 2 == 1)
+            res = (res + a) % m;
+        a = (a * 2) % m;
+        b /= 2;
+    }
+    return res;
+}
+
+// Calculate (a^b)%m using modular exponentiation by squaring
+ull modexp(ull a, ull b, ull m) {
+    ull res = 1;
+    a = a % m;
+    while (b > 0) {
+        if (b % 2 == 1)
+            res = mulmod(res, a, m);
+        a = mulmod(a, a, m);
+        b /= 2;
+    }
+    return res;
+}
+
+int main() {
+    ull a, x, n;
+    cin >> a >> x >> n;
+
+    // Convert x to binary
+    string binary_x = "";
+    while (x > 0) {
+        binary_x += to_string(x % 2);
+        x /= 2;
+    }
+    reverse(binary_x.begin(), binary_x.end());
+
+    // Print binary representation of x
+    cout << binary_x << endl;
+
+    // Compute a^2i mod n for i = 0 to ceil(log2(x))
+    ull pow2i = a % n;
+    for (int i = 0; i < binary_x.size(); i++) {
+        cout << pow2i << endl;
+        pow2i = mulmod(pow2i, pow2i, n);
+    }
+    cout << modexp(a, stoi(binary_x, nullptr, 2), n) << endl;
+
+    return 0;
+}
