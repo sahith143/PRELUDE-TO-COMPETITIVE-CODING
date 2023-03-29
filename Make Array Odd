@@ -1,0 +1,44 @@
+** Make Array Odd **
+#include <iostream>
+#include <vector>
+
+int count_operations(const std::vector<int>& arr, int x) {
+    int odd_count = 0, even_count = 0;
+    for (const auto& num : arr) {
+        if (num % 2 == 0) {
+            even_count++;
+        } else {
+            odd_count++;
+        }
+    }
+    if (odd_count == arr.size()) {
+        return 0;  // All elements are odd, no operation needed
+    } else if (even_count == arr.size()) {
+        if (x % 2 == 1) {
+            return (arr.size() + 1) / 2;  // Can perform 2 evens in one operation
+        } else {
+            return -1;  // Cannot make any element odd
+        }
+    } else {
+        if (x % 2 == 1) {
+            return (even_count + 1) / 2;  // Can perform 2 evens in one operation
+        } else {
+            return even_count;  // XOR one of the odds with each even
+        }
+    }
+}
+
+int main() {
+    int t;
+    std::cin >> t;
+    while (t--) {
+        int n, x;
+        std::cin >> n >> x;
+        std::vector<int> arr(n);
+        for (auto& num : arr) {
+            std::cin >> num;
+        }
+        std::cout << count_operations(arr, x) << '\n';
+    }
+    return 0;
+}
