@@ -1,0 +1,60 @@
+** P-Smooth Number **
+#include <iostream>
+#include <vector>
+using namespace std;
+
+vector<int> sieve(int n) {
+    vector<int> primes;
+    vector<bool> is_prime(n+1, true);
+    is_prime[0] = is_prime[1] = false;
+    for (int i = 2; i <= n; i++) {
+        if (is_prime[i]) {
+            primes.push_back(i);
+            for (int j = i*i; j <= n; j += i) {
+                is_prime[j] = false;
+            }
+        }
+    }
+    return primes;
+}
+
+vector<int> p_smooth(int n, int p) {
+    vector<int> primes = sieve(p);
+    vector<int> p_smooth;
+    for (int i = 1; i <= n; i++) {
+        int x = i;
+        bool is_p_smooth = true;
+        for (int j = 0; j < primes.size(); j++) {
+            int prime = primes[j];
+            while (x % prime == 0) {
+                x /= prime;
+            }
+            if (x == 1) {
+                break;
+            }
+            if (prime > p || x > 1) {
+                is_p_smooth = false;
+                break;
+            }
+        }
+        if (is_p_smooth) {
+            p_smooth.push_back(i);
+        }
+    }
+    return p_smooth;
+}
+
+int main() {
+    int n, p;
+    cout << "Enter the upper limit: ";
+    cin >> n;
+    cout << "Enter the smoothness factor (p): ";
+    cin >> p;
+    vector<int> p_smooth_numbers = p_smooth(n, p);
+    cout << "P-smooth numbers between 1 and " << n << " are: ";
+    for (int i = 0; i < p_smooth_numbers.size(); i++) {
+        cout << p_smooth_numbers[i] << " ";
+    }
+    cout << endl;
+    return 0;
+}
