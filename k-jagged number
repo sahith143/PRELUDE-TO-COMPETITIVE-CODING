@@ -1,0 +1,42 @@
+** k-jagged number **
+#include <iostream>
+#include <vector>
+using namespace std;
+
+vector<bool> sieve(int n) {
+    vector<bool> is_prime(n + 1, true);
+    is_prime[0] = is_prime[1] = false;
+    for (int i = 2; i * i <= n; i++) {
+        if (is_prime[i]) {
+            for (int j = i * i; j <= n; j += i) {
+                is_prime[j] = false;
+            }
+        }
+    }
+    return is_prime;
+}
+
+void kjagged_numbers(int k, int limit) {
+    vector<bool> is_prime = sieve(limit);
+    for (int i = 2; i <= limit; i++) {
+        int num = i;
+        bool is_kjagged = true;
+        for (int j = k; j <= num; j++) {
+            if (is_prime[j] && num % j == 0) {
+                num /= j;
+                j = k - 1;
+            }
+            if (num == 1) break;
+        }
+        if (num > 1) is_kjagged = false;
+        if (is_kjagged) cout << i << " ";
+    }
+    cout << endl;
+}
+
+int main() {
+    int k = 2;
+    int limit = 100;
+    kjagged_numbers(k, limit);
+    return 0;
+}
