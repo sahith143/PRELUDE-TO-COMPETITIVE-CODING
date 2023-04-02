@@ -1,0 +1,40 @@
+** Stormer's Number **
+#include <iostream>
+#include <cmath>
+#include <vector>
+
+using namespace std;
+
+int gcd(int a, int b) {
+    if (b == 0) {
+        return a;
+    }
+    return gcd(b, a % b);
+}
+
+int stormer(vector<int> coeffs) {
+    int n = coeffs.size() - 1;
+    int a = abs(coeffs[0]);
+    for (int i = 1; i <= n; i++) {
+        a = gcd(a, abs(coeffs[i]));
+    }
+    return ceil(n/(double)a);
+}
+
+int main() {
+    vector<int> coeffs = {1, -4, 7, -4, 1};
+    cout << "Stormer's number of the polynomial ";
+    for (int i = coeffs.size() - 1; i >= 0; i--) {
+        if (i == coeffs.size() - 1) {
+            cout << coeffs[i] << "x^" << i;
+        } else if (i == 1) {
+            cout << " " << ((coeffs[i] >= 0) ? "+" : "-") << " " << abs(coeffs[i]) << "x";
+        } else if (i == 0) {
+            cout << " " << ((coeffs[i] >= 0) ? "+" : "-") << " " << abs(coeffs[i]);
+        } else {
+            cout << " " << ((coeffs[i] >= 0) ? "+" : "-") << " " << abs(coeffs[i]) << "x^" << i;
+        }
+    }
+    cout << " is " << stormer(coeffs) << endl;
+    return 0;
+}
